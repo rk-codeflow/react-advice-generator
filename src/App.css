@@ -38,6 +38,10 @@ body {
   border-radius: 1rem;
   text-align: center;
   position: relative;
+
+  @media screen and (max-width: 500px) {
+    padding: 1.1rem;
+  }
 }
 
 p,
