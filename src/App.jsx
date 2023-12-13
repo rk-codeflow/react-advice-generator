@@ -5,35 +5,39 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 function App() {
-  const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState({ slip: {} });
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch("https://api.adviceslip.com/advice");
+      const result = await response.json();
+      setData(result);
+      setLoading(false);
+    } catch (error) {
+      console.log("Error getting data", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch("https://api.adviceslip.com/advice");
-        const result = await response.json();
-        setData(result);
-        console.log("result", result);
-        console.log(result.slip.advice);
-      } catch (error) {
-        console.log("Error getting data", error);
-      }
-    };
-
     fetchData();
   }, []);
 
+  if (loading) {
+    return <h1>Loading ...</h1>;
+  }
+
   return (
     <div className="card">
-      <p>Advice #117</p>
-      <h3>&ldquo; fjfjf &rdquo;</h3>
+      <p>Advice #{data.slip.id}</p>
+      <h3>&ldquo; {data.slip.advice} &rdquo;</h3>
       <img
         src={divider}
         alt="divider"
         width="100%"
         style={{ marginBottom: "1.5rem" }}
       />
-      <div className="dice">
+      <div className="dice" onClick={fetchData}>
         <img src={dice} alt="dice roller" width={20} />
       </div>
     </div>
