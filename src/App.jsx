@@ -30,7 +30,7 @@ function App() {
   return (
     <div className="card">
       <p>Advice #{data.slip.id}</p>
-      <h3>&ldquo; {data.slip.advice} &rdquo;</h3>
+      <h3>&ldquo;{data.slip.advice} &rdquo;</h3>
       <img
         src={divider}
         alt="divider"
